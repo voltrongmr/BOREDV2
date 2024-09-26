@@ -1,0 +1,7 @@
+OverlayExtension/
+├── manifest.json
+├── popup.html
+├── popup.css
+├── popup.js
+├── background.js
+└── icon.png    (Optional - Replace with your icon file)
