@@ -1,1 +1,40 @@
+/* Glowing Bar */
+#glowBar {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  width: 30px;
+  height: 5px;
+  background-color: green;
+  box-shadow: 0px 0px 10px 2px green;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Dropdown Menu */
+#glowBarMenu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+/* Overlay Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 9999;
+}
 
