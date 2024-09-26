@@ -9,6 +9,7 @@
   box-shadow: 0px 0px 10px 2px green;
   cursor: pointer;
   transition: all 0.3s ease;
+  z-index: 10000;  /* Ensure the bar is above other content */
 }
 
 /* Dropdown Menu */
@@ -37,4 +38,3 @@
   color: white;
   z-index: 9999;
 }
-
