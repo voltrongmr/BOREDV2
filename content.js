@@ -30,7 +30,7 @@ menu.innerHTML = `
 `;
 bar.appendChild(menu);
 
-// Create overlays for each button
+// Create overlays for each button (initially hidden)
 let overlays = {
   Games: createOverlay('Games Overlay'),
   Hacks: createOverlay('Hacks Overlay'),
@@ -63,7 +63,38 @@ function createOverlay(content) {
   return overlay;
 }
 
-// Handle bar hover for dropdown menu
+// Function to show overlay
+function showOverlay(overlay) {
+  for (let key in overlays) {
+    overlays[key].style.display = 'none';  
+  }
+  overlay.style.display = 'flex';  
+}
+
+// Message listener to show, hide, or toggle overlay and bar
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'showOverlay') {
+    showOverlay(overlays[request.content]);
+  } else if (request.action === 'hideOverlay') {
+    for (let key in overlays) {
+      overlays[key].style.display = 'none';  
+    }
+  } else if (request.action === 'toggleBar') {
+    const glowBar = document.getElementById('glowBar');
+    
+    if (request.currentState === 'active') {
+      glowBar.style.width = '5px';
+      glowBar.style.backgroundColor = 'red';
+      // Hide the menu when collapsing the bar
+      menu.style.display = 'none';
+    } else {
+      glowBar.style.width = '30px';
+      glowBar.style.backgroundColor = 'green';
+    }
+  }
+});
+
+// Keep the dropdown open while hovering
 bar.addEventListener('mouseover', () => {
   menu.style.display = 'block';
 });
@@ -72,32 +103,16 @@ bar.addEventListener('mouseout', () => {
   menu.style.display = 'none';
 });
 
-// Add functionality to buttons
+// Prevent menu from disappearing when hovering over it
+menu.addEventListener('mouseover', () => {
+  menu.style.display = 'block';
+});
+
+menu.addEventListener('mouseout', () => {
+  menu.style.display = 'none';
+});
+
+// Button functionality
 document.getElementById('gamesBtn').onclick = () => showOverlay(overlays.Games);
 document.getElementById('hacksBtn').onclick = () => showOverlay(overlays.Hacks);
 document.getElementById('aiBtn').onclick = () => showOverlay(overlays.AI);
-
-function showOverlay(overlay) {
-  // Hide all overlays first
-  for (let key in overlays) {
-    overlays[key].style.display = 'none';  
-  }
-  overlay.style.display = 'flex';  // Show selected overlay
-}
-
-// Handle keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.key === ';') {
-    // Shrink the bar and hide overlays
-    bar.style.width = '5px';
-    bar.style.backgroundColor = 'red';
-    // Hide all overlays when shrinking
-    for (let key in overlays) {
-      overlays[key].style.display = 'none';  
-    }
-  } else if (e.ctrlKey && e.key === ':') {
-    // Expand the bar and return to green
-    bar.style.width = '30px';
-    bar.style.backgroundColor = 'green';
-  }
-});
