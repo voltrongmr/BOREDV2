@@ -32,15 +32,15 @@
   "commands": {
     "shrink-bar": {
       "suggested_key": {
-        "default": "Ctrl+;",
-        "mac": "Ctrl+;"
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
       },
       "description": "Shrink the bar and disable overlays"
     },
     "expand-bar": {
       "suggested_key": {
-        "default": "Ctrl+:",
-        "mac": "Ctrl+:"
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
       },
       "description": "Expand the bar and enable overlays"
     }
