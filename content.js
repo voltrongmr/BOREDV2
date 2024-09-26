@@ -78,7 +78,7 @@ document.getElementById('hacksBtn').onclick = () => showOverlay(overlays.Hacks);
 document.getElementById('aiBtn').onclick = () => showOverlay(overlays.AI);
 
 function showOverlay(overlay) {
-  // Hide all overlays
+  // Hide all overlays first
   for (let key in overlays) {
     overlays[key].style.display = 'none';  
   }
