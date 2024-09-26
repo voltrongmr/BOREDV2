@@ -31,10 +31,11 @@ menu.innerHTML = `
 bar.appendChild(menu);
 
 // Create overlays for each button
-let overlays = {};
-['Games', 'Hacks', 'AI'].forEach((item) => {
-  overlays[item] = createOverlay(item);
-});
+let overlays = {
+  Games: createOverlay('Games Overlay'),
+  Hacks: createOverlay('Hacks Overlay'),
+  AI: createOverlay('AI Overlay')
+};
 
 // Function to create an overlay
 function createOverlay(content) {
@@ -51,7 +52,7 @@ function createOverlay(content) {
   overlay.style.justifyContent = 'center';
   overlay.style.alignItems = 'center';
   overlay.style.zIndex = '9999';  // Ensure it appears on top
-  overlay.innerHTML = `<h1>${content} Overlay</h1><button class="closeOverlay">Close</button>`;
+  overlay.innerHTML = `<h1>${content}</h1><button class="closeOverlay">Close</button>`;
   document.body.appendChild(overlay);
 
   // Add close button functionality
@@ -72,12 +73,15 @@ bar.addEventListener('mouseout', () => {
 });
 
 // Add functionality to buttons
-document.getElementById('gamesBtn').onclick = () => showOverlay(overlays['Games']);
-document.getElementById('hacksBtn').onclick = () => showOverlay(overlays['Hacks']);
-document.getElementById('aiBtn').onclick = () => showOverlay(overlays['AI']);
+document.getElementById('gamesBtn').onclick = () => showOverlay(overlays.Games);
+document.getElementById('hacksBtn').onclick = () => showOverlay(overlays.Hacks);
+document.getElementById('aiBtn').onclick = () => showOverlay(overlays.AI);
 
 function showOverlay(overlay) {
-  Object.values(overlays).forEach(o => o.style.display = 'none');  // Hide all overlays
+  // Hide all overlays
+  for (let key in overlays) {
+    overlays[key].style.display = 'none';  
+  }
   overlay.style.display = 'flex';  // Show selected overlay
 }
 
@@ -87,9 +91,12 @@ document.addEventListener('keydown', (e) => {
     // Shrink the bar and hide overlays
     bar.style.width = '5px';
     bar.style.backgroundColor = 'red';
-    Object.values(overlays).forEach(o => o.style.display = 'none');  // Hide all overlays
+    // Hide all overlays when shrinking
+    for (let key in overlays) {
+      overlays[key].style.display = 'none';  
+    }
   } else if (e.ctrlKey && e.key === ':') {
-    // Expand the bar and re-enable dropdown
+    // Expand the bar and return to green
     bar.style.width = '30px';
     bar.style.backgroundColor = 'green';
   }
