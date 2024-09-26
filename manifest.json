@@ -5,6 +5,19 @@
   "description": "An extension with a glowing bar and overlays.",
   "permissions": ["storage", "activeTab", "tabs"],
   "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
   "background": {
     "service_worker": "background.js"
   },
@@ -12,23 +25,25 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "css": ["content.css"]
+      "css": ["content.css"],
+      "run_at": "document_idle"
     }
   ],
   "commands": {
     "shrink-bar": {
       "suggested_key": {
-        "default": "Ctrl+Shift+X",
-        "mac": "Command+Shift+X"
+        "default": "Ctrl+;",
+        "mac": "Ctrl+;"
       },
       "description": "Shrink the bar and disable overlays"
     },
     "expand-bar": {
       "suggested_key": {
-        "default": "Ctrl+Shift+X",
-        "mac": "Command+Shift+X"
+        "default": "Ctrl+:",
+        "mac": "Ctrl+:"
       },
       "description": "Expand the bar and enable overlays"
     }
   }
 }
+
