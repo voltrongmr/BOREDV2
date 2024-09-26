@@ -119,7 +119,7 @@ menu.addEventListener('mouseout', () => {
   }
 });
 
-// Button functionality
+// Button functionality to show the overlays
 document.getElementById('gamesBtn').onclick = () => showOverlay(overlays.Games);
 document.getElementById('hacksBtn').onclick = () => showOverlay(overlays.Hacks);
 document.getElementById('aiBtn').onclick = () => showOverlay(overlays.AI);
