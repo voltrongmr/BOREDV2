@@ -6,8 +6,8 @@ bar.style.right = '20px';
 bar.style.top = '10px';
 bar.style.width = '30px';
 bar.style.height = '5px';
-bar.style.backgroundColor = 'green';
-bar.style.boxShadow = '0px 0px 10px 2px green';
+bar.style.backgroundColor = 'limegreen';  // Changed to limegreen for better visibility
+bar.style.boxShadow = '0px 0px 10px 2px limegreen';
 bar.style.transition = 'all 0.3s ease';
 bar.style.cursor = 'pointer';
 bar.style.zIndex = '10000';  // Ensure it appears on top
@@ -71,10 +71,15 @@ function showOverlay(overlay) {
   overlay.style.display = 'flex';  
 }
 
+// Flag to indicate if the menu is locked
+let isMenuLocked = false;
+
 // Message listener to show, hide, or toggle overlay and bar
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'showOverlay') {
-    showOverlay(overlays[request.content]);
+    if (!isMenuLocked) {
+      showOverlay(overlays[request.content]);
+    }
   } else if (request.action === 'hideOverlay') {
     for (let key in overlays) {
       overlays[key].style.display = 'none';  
@@ -87,20 +92,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       glowBar.style.backgroundColor = 'red';
       // Hide the menu when collapsing the bar
       menu.style.display = 'none';
+      isMenuLocked = true; // Lock the menu
     } else {
       glowBar.style.width = '30px';
-      glowBar.style.backgroundColor = 'green';
+      glowBar.style.backgroundColor = 'limegreen';
+      isMenuLocked = false; // Unlock the menu
     }
   }
 });
 
 // Keep the dropdown open while hovering
 bar.addEventListener('mouseover', () => {
-  menu.style.display = 'block';
-});
-
-bar.addEventListener('mouseout', () => {
-  menu.style.display = 'none';
+  if (!isMenuLocked) {
+    menu.style.display = 'block';
+  }
 });
 
 // Prevent menu from disappearing when hovering over it
@@ -109,7 +114,9 @@ menu.addEventListener('mouseover', () => {
 });
 
 menu.addEventListener('mouseout', () => {
-  menu.style.display = 'none';
+  if (!isMenuLocked) {
+    menu.style.display = 'none';
+  }
 });
 
 // Button functionality
